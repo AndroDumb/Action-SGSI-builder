@@ -41,7 +41,9 @@ jobs:
 
       - name: Clean up the environment‌‌...
         run: |
-          docker rmi `docker images -q`
+          # possible fix to failed run
+          if [ -n "$(docker images -q)" ]; then docker rmi "$(docker images -q)"; fi
+          
           sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
           sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
           sudo -E apt-get update
